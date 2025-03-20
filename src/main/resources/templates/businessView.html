@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <user_fragment_1 th:replace="fragments\master\fragment_master.html :: master_head_1"></user_fragment_1>
+    <user_fragment_2 th:replace="fragments\master\fragment_master.html :: master_head_2"></user_fragment_2>
+    <script src="webapp/js/businessView.js"></script><!--Подцепляем внешний скрипт-->
+</head>
+
+<body>
+    <div id="IdDivHrefControl" th:text="${hrefControl}" class="d-none"></div>
+    <div id="wrap">
+
+        <!-- Modal form create busines -->
+        <div class="modal fade form-modal-create-bus" id="fromCreateBus" tabindex="-1" aria-labelledby="create-bus-title" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fw-light" id="create-bus-title">Бизнес</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formBusinessId">
+                            <div class="form-floating mb-3">
+                                <input form_control="method" type="text" class="form-control is-valid d-none" placeholder="method">
+                            </div>
+                            <div class="form-floating mb-3 d-none"><!--d-none-->
+                                <input form_control="id" type="text" class="form-control is-valid" placeholder="id">
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input form_control="name" type="text" class="form-control is-valid" id="business_form_name_id" placeholder="Название">
+                                <label for="business_form_name_id">Название</label>
+                                <div form_control="nameDvm" class="invalid-feedback d-none">Неверные данные</div>
+                            </div>
+                            <div class="form-floating">
+                                <textarea form_control="description" class="form-control is-valid" placeholder="Описание" id="business_form_description_id" style="height: 100px"></textarea>
+                                <label for="business_form_description_id">Описание</label>
+                                <div form_control="descriptionDvm" class="invalid-feedback d-none">Неверные данные</div>
+                            </div>
+                            <div class="btn-add mt-4">
+                                <button onclick="doAjaxFormBusiness(GetFormData('formBusinessId',GetArrFields('formBusiness')));" type="button" class="btn btn-modify-action-border" >Сохранить</button>
+                                <!-- <button onclick="ConfigBusinessFormDelete();" type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Удалить</button> -->
+                                <button class="btn btn-modify-transition-border" type="button">Отменить</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-modify-transition btn-sm" data-bs-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Only modal  Rights Добавление/Удаление сотрудника из бизнеса-->
+        <div class="modal modal-xl fade form-modal-create" id="formCreateCompanyPeopleAddNewBusRights" tabindex="-1" aria-labelledby="user-rights-settings-form" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title fw-light" id="user-rights-settings-form">Доступ пользователей к бизнесу</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row align-items-center">
+                        <div class="col-12 col-md-5 mb-3">
+
+                            
+                            <div id="tableAllSubUserListId" class="form-box--table size-scroll">
+                                <div class="table-responsive">
+                                    <table class="table table-hover border-dark table-nowrap" data_table="#tableAllSubUserListId">
+                                        <thead>
+                                            <tr>
+                                                <th class="fw-light">Пользователи</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-12 col-md-2 mb-3">
+                            <button id="AddSubUserToBusinessId" onclick="AddSubUserToBusiness();" class="btn btn-modify-action-border btn-sm w-100" role="button" disabled="disabled">Добавить<i class='bx bx-chevron-right'></i></button>
+                            <button id="DeleteSubUserFromBusinessId" onclick="DeleteSubUserFromBusiness();" class="btn btn-modify-action-border btn-sm w-100 mt-1" role="button" disabled="disabled"><i class='bx bx-chevron-left'></i>Убрать</a></button>
+                        </div>
+                        <div class="col-12 col-md-5 mb-3">
+
+                            <div id="tableAllSubUserBListId" class="form-box--table size-scroll">
+                                <div class="table-responsive">
+                                    <table class="table table-hover border-dark table-nowrap" data_table="#tableAllSubUserBListId">
+                                        <thead>
+                                        <tr>
+                                            <th class="fw-light">В бизнесе</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-modify-transition btn-sm" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
+
+        <!-- Only modal  Rights Добавление/Удаление контрагента из бизнеса-->
+        <div class="modal modal-xl fade form-modal-create" id="formCounteragentToBusiness" tabindex="-1" aria-labelledby="user-rights-settings-form" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-light" id="counteragent-business-settings-form">Доступ контрагентов к бизнесу</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row align-items-center">
+                            <div class="col-12 col-md-5 mb-3">
+
+
+                                <div id="tableAllCounteragentListId" class="form-box--table size-scroll">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover border-dark table-nowrap" data_table="#tableAllCounteragentListId">
+                                            <thead>
+                                            <tr>
+                                                <th class="fw-light">Контрагенты</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-12 col-md-2 mb-3">
+                                <button id="AddCounteragentToBusinessId" onclick="AddCounteragentToBusiness();" class="btn btn-modify-action-border btn-sm w-100" role="button" disabled="disabled">Добавить<i class='bx bx-chevron-right'></i></button>
+                                <button id="DeleteCounteragentFromBusinessId" onclick="DeleteCounteragentFromBusiness();" class="btn btn-modify-action-border btn-sm w-100 mt-1" role="button" disabled="disabled"><i class='bx bx-chevron-left'></i>Убрать</a></button>
+                            </div>
+                            <div class="col-12 col-md-5 mb-3">
+
+                                <div id="tableAllCounteragentBListId" class="form-box--table size-scroll">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover border-dark table-nowrap" data_table="#tableAllCounteragentBListId">
+                                            <thead>
+                                            <tr>
+                                                <th class="fw-light">В бизнесе</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-modify-transition btn-sm" data-bs-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <header th:replace="fragments\view\fragment_common.html :: header_control_list"></header>
+
+
+        <section class="section-access-bus mb-3 mt-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <a onclick="GetSubUserShortList(); GetSubUserShortBList(); SetAccessButtonBusinessSubUser();" href="#" class="btn btn-light btn-sm mt-1" role="button" data-bs-toggle="modal" data-bs-target="#formCreateCompanyPeopleAddNewBusRights"><i class='bx bx-lock'></i> Пользователи</a>
+                        <a onclick="GetCounteragentShortList(); GetCounteragentShortBList();" href="#" class="btn btn-light btn-sm mt-1" role="button" data-bs-toggle="modal" data-bs-target="#formCounteragentToBusiness"><i class='bx bx-lock'></i> Контрагенты</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="main-all-project main-m-h">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 align-self-center">
+                        <h2>Управление</h2>
+                    </div>
+                    <div class="col-6 align-self-center">
+                        <div class="block-btn-add">
+                            <a onclick="ConfigBusinessFormNew();" class="btn btn-modify-action" href="#" role="button" data-bs-toggle="modal" data-bs-target="#fromCreateBus">
+                                <i class='bx bx-dialpad-alt'></i> Бизнес
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="businessListId">
+                    <!-- start render карточки <div class="col-4">
+                        <div class="box">
+                            <div class="box-body text-center">
+                                <div class="box-title">
+                                   <h3> ООО "Петрович"</h3>
+                                </div>
+                                <div class="box-text">
+                                    Производство диванов
+                                </div>
+                                <div class="box-link">
+                                    <a class="btn btn-modify-action-border btn-modify-action-size" href="#" role="button">
+                                    Контроль</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> end render карточки -->
+                </div>
+            </div>
+        </section>
+
+        <footer th:replace="fragments\view\fragment_common.html :: footer"/>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js"></script>
+
+    <!-----------User Script----------------------------->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            StartPage();
+        });
+    </script>
+</body>
+
+</html>
+

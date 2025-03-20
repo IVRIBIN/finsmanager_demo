@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <user_fragment_1 th:replace="fragments\master\fragment_master.html :: master_head_1"></user_fragment_1>
+</head>
+
+<body class="login-img">
+    <div id="wrap-page">
+
+        <section class="page page-login">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 mx-auto mt-5 text-center">
+                        
+                        <img th:src="@{webapp/img/folderBg.png}" class="header-brand-img" alt="FinFolder">
+                        <a href="#" class="header-brand-name align-middle">ФИНФОЛДЕР</a>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-8 col-12 mx-auto mt-2">
+                        <div class="container-login">
+                            <div class="wrap-login p-4">
+                                <form class="" th:action="@{/reg_confirm}" th:object="${registrationform}" method="post" id="registrationform_id">
+                                <span class="login-form-title"> Регистрация </span>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="wrap-input input-group">
+                                            <a href="#" th:class="${attrAClass}"><i class='bx bx-user'></i></a>
+                                            <input th:class="${attrInputClass}" type="text" placeholder="Имя" th:field="*{firstName}" id="f_name_field_id" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="wrap-input input-group">
+                                            <span th:class="${attrAClass}"><i class='bx bx-user'></i></span>
+                                            <input th:class="${attrInputClass}" type="text" placeholder="Фамилия" th:field="*{lastName}" id="l_name_field_id" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="wrap-input input-group">
+                                            <span th:class="${attrAClass}"><i class='bx bx-envelope'></i></span>
+                                            <input th:class="${attrInputClass}" type="text" placeholder="Почта" th:field="*{email}" id="mail_name_field_id" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="wrap-input input-group">
+                                            <span th:class="${attrAClass}"><i class='bx bx-hide'></i></span>
+                                            <input th:class="${attrInputClass}" type="password" placeholder="Пароль" th:field="*{password}" id="password_field_id" required>
+                                        </div>
+                                    </div>
+                                    <!-- ЧекБокс -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="form-check-input custom-control-input-login" type="checkbox" checked value="Y" th:field="*{approval}" id="customCheck1">
+                                                <label class="custom-control-label custom-control-label-effect" for="customCheck1"><small>Регистрируясь, Вы даете согласие на <a href="#">обработку персональных данных</a> и принимаете <a href="#">публичная оферта ООО «ОПЕН ТЕХ»</a></small></label>
+                                            </div>        
+                                        </div>
+                                    </div>
+                                    <!--Всплывающай алерт-->
+                                    <div th:class="${attrErrorMsgClass}" id="message-registration-fall">
+                                        <div class="alert alert-danger" role="alert" th:text="${attrErrorMsgValue}">
+                                            Неверные данные
+                                        </div>
+                                    </div>
+                                    <div class="col12 text-center mt-3">
+                                        <button type="submit" class="btn btn-modify-action w-100">Регистрация</button>
+                                    </div>
+                                    <div class="col-12 text-center mt-3 text-muted fw-light">
+                                        <small>Уже зарегистрированы? Личный кабинет - <a th:href="${href1}" class="text-danger" style="cursor: pointer">Войти</a></small>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+
+
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+</body>
+
+</html>
+

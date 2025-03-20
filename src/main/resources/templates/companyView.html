@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <user_fragment_1 th:replace="fragments\master\fragment_master.html :: master_head_1"></user_fragment_1>
+    <user_fragment_2 th:replace="fragments\master\fragment_master.html :: master_head_2"></user_fragment_2>
+    <script src="webapp/js/companyView.js"></script><!--Подцепляем внешний скрипт-->
+
+    <!--Маска телефона-->
+    <user_fragment_2 th:replace="fragments\master\fragment_master.html :: master_head_phone_mask_plagin"></user_fragment_2>
+</head>
+
+<body>
+    <div id="wrap">
+
+        <!-- Modal add User you company. Employee Form-->
+        <div class="modal fade form-modal-create" id="EmployeeFormModalToggle" tabindex="-1" aria-labelledby="search-contragent-name" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title fw-light" id="search-contragent-name_h5">Счет</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEmployeeId">
+                        <div class="form-floating mb-3 d-none"><!--d-none-->
+                            <input form_control="method" type="text" class="form-control is-valid" placeholder="method">
+                        </div>
+                        <div class="form-floating mb-3 d-none"><!--d-none-->
+                            <input form_control="id" type="text" class="form-control is-valid" placeholder="id">
+                        </div>
+
+                        <!-- Новые поля -->
+                        <div class="form-floating mb-2">
+                            <input form_control="accName" type="text" class="form-control" id="accNameId" placeholder="Название">
+                            <label for="accNameId">Название</label>
+                            <div form_control="accNameDvm" class="invalid-feedback">Неверные данные</div>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input form_control="description" type="text" class="form-control" id="descriptionId" placeholder="Описание">
+                            <label for="descriptionId">Описание</label>
+                            <div form_control="descriptionDvm" class="invalid-feedback">Неверные данные</div>
+                        </div>
+                        <hr>
+                        <h5 class="mt-4 fw-light">Финансы</h5>
+                        <div class="form-floating mb-2">
+                            <input form_control="account" type="text" class="form-control" id="accountAddPeopleId" placeholder="№ счета">
+                            <label for="accountAddPeopleId">№ счета</label>
+                            <div form_control="accountDvm" class="invalid-feedback">Неверные данные</div>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input form_control="inn" type="text" class="form-control" id="innId" placeholder="ИНН">
+                            <label for="innId">ИНН</label>
+                            <div form_control="innDvm" class="invalid-feedback">Неверные данные</div>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input form_control="kpp" type="text" class="form-control" id="kppId" placeholder="КПП">
+                            <label for="kppId">КПП</label>
+                            <div form_control="kppDvm" class="invalid-feedback">Неверные данные</div>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input form_control="bik" type="text" class="form-control" id="bikId" placeholder="БИК">
+                            <label for="bikId">БИК</label>
+                            <div form_control="bikDvm" class="invalid-feedback">Неверные данные</div>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input form_control="cardNum" type="text" class="form-control" id="cardNumId" placeholder="№ карты">
+                            <label for="cardNumId">№ карты</label>
+                            <div form_control="cardNumDvm" class="invalid-feedback">Неверные данные</div>
+                        </div>
+                        <!--<div class="form-floating mb-2">
+                            <input form_control="balance" type="text" class="form-control" id="balanceAddPeopleId" placeholder="На счете">
+                            <label for="balanceAddPeopleId">На счете</label>
+                            <div form_control="balanceDvm" class="invalid-feedback">Неверные данные</div>
+                        </div>-->
+                        
+                        <div class="btn-add mt-4">
+                            <a onclick="doAjaxFormEmployee(GetFormData('formEmployeeId',GetArrFields('formEmployee')));" class="btn btn-modify-action" href="#" role="button">Сохранить</a>
+                            <a class="btn btn-modify-transition-border" href="#" role="button">Отменить</a>
+                        </div>
+                         
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-modify-transition btn-sm" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- Only modal form filter -->
+        <div class="modal fade form-modal-create" id="formSearchContragent" tabindex="-1" aria-labelledby="search-contragent-name" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title fw-light" id="search-contragent-name_h52">Фильтр</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="filterEmployeeId">
+                        <div class="f-d-n">
+                            <input form_control="limit">
+                            <input form_control="offset">
+                        </div>
+                        <div class="form-floating mb-2 d-none">
+                            <input form_control="initFlg" class="form-check-input" type="checkbox">
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input id="searchNameContragentId" form_control="fullName" type="text" class="form-control form-control-sm" placeholder="Название">
+                            <label for="searchNameContragentId">ФИО</label>
+                            <div form_control="fullNameDvm" class="invalid-feedback">Неверные данные</div>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <select id="positiontId" form_control="position" class="form-select" aria-label="Должность">
+                                <option value="Default" selected>Выберете значение</option>
+                                <!--<option value="Генеральный директор">Генеральный директор</option>-->
+                                <!--<option value="Касса">Касса</option>-->
+                                <!--<option value="Бухгалтер">Бухгалтер</option>-->
+                                <!--<option value="Специалист">Специалист</option>-->
+                                <!--<option value="Водитель">Водитель</option>-->
+
+                                <option value="GenMng">Генеральный директор</option>
+                                <option value="Cash">Касса</option>
+                                <option value="Bookkeeper">Бухгалтер</option>
+                                <option value="Specialist">Специалист</option>
+                                <option value="Driver">Водитель</option>
+                            </select>
+                            <label for="positiontId">Должность</label>
+                            <div form_control="positionDvm" class="invalid-feedback">Неверные данные</div>
+                        </div>
+                        <div class="form-floating mb-2 d-none">
+                            <input form_control="orderBy" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="form-floating mb-2 d-none">
+                            <input form_control="orderLevel" type="text" class="form-control form-control-sm">
+                        </div>
+
+                        <div class="btn-add mt-4">
+                            <a onclick="SetFilterInitFlg('filterEmployeeId'); doAjaxRequestEmployee('getCompanyEmployeeList')" class="btn btn-modify-action" href="#" role="button">Показать</a>
+                            <a class="btn btn-modify-transition-border" href="#" role="button">Отменить</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-modify-transition btn-sm" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
+          <!-- Only modal form Company edit, Company Form-->
+        <div class="modal fade form-modal-create" id="formEditCompany" tabindex="-1" aria-labelledby="search-contragent-edit-form" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title fw-light" id="search-contragent-edit-form">Изменить</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formCompanyId">
+                        <div class="form-floating mb-3">
+                            <input form_control="method" type="text" class="form-control is-valid d-none" placeholder="method">
+                        </div>
+                        <div class="form-floating mb-3 d-none"><!--d-none-->
+                            <input form_control="id" type="text" class="form-control is-valid" placeholder="id">
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input form_control="name" type="text" class="form-control is-invalid" id="nameAddCompany" placeholder="Название">
+                            <label for="nameAddCompany">Название</label>
+                            <div form_control="nameDvm" class="invalid-feedback">Неверные данные</div>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <textarea form_control="description" class="form-control is-invalid" placeholder="Описание" id="descAddCompany"></textarea>
+                            <label for="descAddCompany">Описание</label>
+                            <div form_control="descriptionDvm" class="invalid-feedback">Неверные данные</div>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input form_control="inn" type="text" class="form-control is-invalid" id="innAddCompany" placeholder="ИНН">
+                            <label for="innAddCompany">ИНН</label>
+                            <div form_control="innDvm" class="invalid-feedback">Неверные данные</div>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input form_control="kpp" type="text" class="form-control is-invalid" id="kppAddCompany" placeholder="КПП">
+                            <label for="kppAddCompany">КПП</label>
+                            <div form_control="kppDvm" class="invalid-feedback">Неверные данные</div>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input form_control="account" type="text" class="form-control is-invalid" id="accountAddCompany" placeholder="Счет">
+                            <label for="accountAddCompany">Счет</label>
+                            <div form_control="accountDvm" class="invalid-feedback">Неверные данные</div>
+                        </div>
+                        <div class="btn-add mt-4">
+                            <a onclick="doAjaxFormCompany(GetFormData('formCompanyId',GetArrFields('formCompany')));" class="btn btn-modify-action" href="#" role="button">Сохранить</a>
+                            <a class="btn btn-modify-transition-border" href="#" role="button">Отменить</a>
+                        </div>
+                         
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-modify-transition btn-sm" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <header th:replace="fragments\view\fragment_common.html :: header_control_list"/>
+
+        <section class="section-breadcrumb mt-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                              <li class="breadcrumb-item"><a href="#" class="link-secondary"><small>Управление</small></a></li>
+                              <li class="breadcrumb-item active" aria-current="page"><small>Компания</small></li>
+                            </ol>
+                          </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="mainTitleAndButton">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 align-self-center">
+                        <h2>Компания</h2>
+                    </div>
+                    <div class="col-6 align-self-center">
+                        <div th:switch="${attrUserRole}">
+                            <div th:case="USER" class="block-btn-add">
+                                <button onclick="ConfigEmployeeFormNew();" class="btn btn-modify-action-border" role="button" data-bs-toggle="modal" data-bs-target="#EmployeeFormModalToggle"><i class='bx bx-list-plus' ></i> Счет</button>
+                            </div>
+                            <div th:case="*"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="mainTable" class="main-m-h">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <div class="form-box">
+                            <h5 class="mb-3">Информация</h5>
+                            <div class="mt-2">
+                                <span id="id_company_name_info" class="w-100 text-truncate d-block">Моя компания</span>
+                                <small class="text-truncate text-muted d-block fw-light">Название</small>
+                            </div>
+                            <div class="mt-2">
+                                <span id="id_company_description_info" class="w-100 text-truncate d-block">Основная</span>
+                                <small class="text-truncate text-muted d-block fw-light">Описание</small>
+                            </div>
+                            <div class="mt-2">
+                                <span id="id_company_inn_info" class="w-100 text-truncate d-block">000000000</span>
+                                <small class="text-truncate text-muted d-block fw-light">ИНН</small>
+                            </div>
+                            <div class="mt-2">
+                                <span id="id_company_kpp_info" class="w-100 text-truncate d-block">000000000</span>
+                                <small class="text-truncate text-muted d-block fw-light">КПП</small>
+                            </div>
+                            <div class="mt-2">
+                                <span id="id_company_account_info" class="w-100 text-truncate d-block">000000000</span>
+                                <small class="text-truncate text-muted d-block fw-light">№ cчета</small>
+                            </div>
+                            <hr>
+                            <div class="mt-2">
+                                <span id="balance_total_field_id" class="w-100 text-truncate d-block fs-3">₽ 0</span>
+                                <small class="text-truncate text-muted d-block fw-light">Баланс</small>
+                            </div>
+                            <hr>
+                            <div class="mt-3">
+                                <div class="col">
+                                    <a class="btn btn-modify-action-border btn-sm" href="#" role="button" data-bs-toggle="modal" data-bs-target="#formEditCompany" onclick="GetCompanyForm();"><i class='bx bx-edit'></i> Редактировать</a>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <h5 class="mt-4">Деньги на счетах</h5>
+                        
+                        <div class="row" id="tableCompanyAccListId">
+                            <!-- start rending card -->
+                            <div class="col-12"> 
+                                <div class="form-box">
+                                    <div class="mt-2">
+                                        <div class="row">
+                                            <div class="col-12 col-md-8 mb-3">
+                                                <span class="w-100 text-truncate d-block fs-4 mb-1">Касса Лариса Ивановна</span>
+                                                <span class="w-100 text-truncate d-block fs-6">ВТБ Банк</span>
+                                                <small class="fw-light">
+                                                    <span>№ счета: 40372691400000004529</span>,
+                                                    <span>ИНН: 1751589640</span>,
+                                                    <span>КПП: 170320909</span>,
+                                                    <span>БИК: 44525974</span>,
+                                                    <span>№ карты: 4034-1111-2222-3333</span>
+                                                </small>
+                                            </div>
+                                            <div class="col-12 col-md-4 mb-2">
+                                                <span class="w-100 text-truncate d-block fs-3"><small>₽</small> 0</span>
+                                                <small class="text-truncate text-muted d-block fw-light">На счете</small>
+                                            </div>
+                                            <div class="col-12 mt-2 mb-2">
+                                                <button tbl_update onclick="ConfigEmployeeFormEdit();" class="btn btn-modify-action-border btn-sm btn-margin-r-5 mb-1 btn-margin-r-5" role="button" data-bs-toggle="modal" data-bs-target="#EmployeeFormModalToggle"><i class='bx bx-edit'></i>Изменить</button>
+                                                <button tbl_delete onclick="ConfigEmployeeFormDelete();" class="btn btn-outline-danger btn-sm mb-1 btn-margin-r-5" role="button"><i class='bx bx-trash'></i>Удалить</button>    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>   
+                            </div>
+                            <!-- end rending card -->
+                        </div>
+                    </div>
+                </div>
+            </div>             
+        </section>
+
+        <footer th:replace="fragments\view\fragment_common.html :: footer"/> 
+        
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js"></script>
+
+    <!-----------User Script----------------------------->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            StartPage();
+        });
+
+        //Phone mask
+        $.mask.definitions['h'] = "[0|1|3|4|5|6|7|9]"
+        $("#phoneAddPeopleId").mask("+7 (h99) 999-99-99");
+    </script>
+</body>
+
+</html>
+

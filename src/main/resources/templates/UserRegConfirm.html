@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <user_fragment_1 th:replace="fragments\master\fragment_master.html :: master_head_1"></user_fragment_1>
+</head>
+
+<body class="login-img">
+    <div id="wrap-page">
+
+        <section class="page page-login">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 mx-auto mt-5">
+                        <div class="alert alert-primary" role="alert">
+                            <h2>Поздравляем с успешной регистрацией!</h2>
+                            <span>Для активации доступа в личный кабинет, пожалуйста, подтвердите регистрацию! Мы выслали письмо с подтверждением на Ваш почтовый адрес указанный при регистрации.</span>
+                            <span>Если Вы не осуществляли регистрацию на нашем сайте, проигнорируйте это письмо. В таком случае аккаунт не будет активирован и не будет доступа в личный кабинет.</span>
+                           <div>
+                                <a th:href="${href1}" class="alert-link">Главная</a>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+
+
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+</body>
+
+</html>
+

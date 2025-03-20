@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<header th:fragment="header_control_list">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-2 col-md-1">
+                <div class="link-all-project">
+                    <a th:href="${hrefBusiness}"><i class='bx bx-customize text-color-gray'></i></a>
+                </div>
+            </div>
+            <!-- Мобильное меню (скрыто на десктопе mobile-screen-header-menu)-->
+            <div class="col-5 col-md-9">
+                <div class="header-menu-dropdown">
+                    <div class="select">
+                        <span class="selected"><i class='bx bx-folder text-color-gray'></i></span>
+                        <div class="caret"></div>
+                    </div>
+                    <ul class="header-menu">
+                        <li><a th:href="${hrefControl}" class="text-color-gray">Контроль</a></li>
+                        <li><a th:href="${hrefProject}" class="text-color-gray">Проект</a></li>
+                        <li><a th:href="${hrefArticle}" class="text-color-gray">Статьи</a></li>
+                        <li><a th:href="${hrefAnalytics}" class="text-color-gray">Аналитика</a></li>
+                        <li><a th:href="${hrefCompany}" class="text-color-gray">Компания</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-5 col-md-2">
+                <div class="link-all-settings">
+                    <a th:href="${hrefCounteragents}" class="text-color-gray"><i class='bx bx-user-circle text-color-gray '></i></a><!-- My contragent -->
+                    <a th:if="${userSettingAccept}" th:href="${hrefUserSettings}"><i class='bx bx-cog text-color-gray '></i></a><!-- My settings -->
+                    <a th:href="@{/logout}"><i class='bx bx-exit text-color-gray'></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<footer th:fragment="footer" class="footer">
+    <div class="container">
+        <div class="row align-items-center flex-row-reverse">
+            <div class="col-md-12 col-sm-12 text-center fw-light">
+                <a th:href="${'http://' + configPort + '/privacy'}">Политика конфиденциальности</a>
+            </div>
+            <div class="col-md-12 col-sm-12 text-center fw-light">
+                <a th:href="${'http://' + configPort + '/privacy-public-oferta'}">Договор-оферта</a>
+            </div>
+            <div class="col-md-12 col-sm-12 text-center fw-light"> 
+                <strong><small>Все права защищены. 2024 г.</small></strong>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div th:fragment="privacy" class="container">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <p>
+                <div><a th:href="${'http://' + configPort + '/privacy'}">Политика конфиденциальности</a></div>
+                <div><a th:href="${'http://' + configPort + '/privacy-public-oferta'}">Договор-оферта</a></div>
+                <div><strong><small>Все права защищены. 2024 г.</small></strong></div>
+            </p>
+        </div>
+    </div>
+</div>
+
+</html>

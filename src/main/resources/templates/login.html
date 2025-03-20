@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <user_fragment_1 th:replace="fragments\master\fragment_master.html :: master_head_1"></user_fragment_1>
+</head>
+
+<body class="login-img">
+    <div id="wrap-page">
+
+        <section class="page page-login">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 mx-auto mt-5 text-center">
+                        
+                        <img th:src="@{webapp/img/folderBg.png}" class="header-brand-img" alt="FinFolder">
+                        <a href="#" class="header-brand-name align-middle">ФИНФОЛДЕР</a>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-8 col-12 mx-auto mt-2">
+                        <div class="container-login">
+                            <div class="wrap-login p-4">
+                                <form th:action="@{/login}" method="post">
+                                <span class="login-form-title"> Авторизация </span>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="wrap-input input-group">
+                                            <span class="input-group-text bg-white text-truncate text-muted"><i class='bx bx-envelope'></i></span>
+                                            <input name="username" id="uname" class="form-control-login input-login border-start-login ms-login fw-light" type="text" placeholder="Почта" required>
+                                            <div class="invalid-feedback">Неверные данные</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="wrap-input input-group">
+                                            <span class="input-group-text bg-white text-truncate text-muted"><i class='bx bx-hide'></i></span>
+                                            <input name="password" id="pwd" class="form-control-login input-login border-start-login ms-login fw-light" type="password" placeholder="Пароль" required>
+                                            <div class="invalid-feedback">Неверные данные</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 text-end">
+                                        <span class="fw-light"><small>Забыли пароль? <a href="http://localhost/recovery">Восcтановить</a></small></span>
+                                    </div>
+                                    <div class="col12 text-center mt-3">
+                                        <button type="submit" class="btn btn-modify-action w-100">Войти</button>
+                                    </div>
+                                    <div class="col-12 text-center mt-3 text-muted fw-light">
+                                        <!--<small>Нет доступа в личный кабинет? - <a href="http://localhost:8080/registration" class="text-danger" style="cursor: pointer">Регистрация</a></small>-->
+                                        <small>Нет доступа в личный кабинет? - <a href="http://www.finfolder.ru/registration" class="text-danger" style="cursor: pointer">Регистрация</a></small>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+
+
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+</body>
+
+</html>
+

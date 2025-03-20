@@ -1,0 +1,71 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+  #port: 8080
+  port: 80
+
+spring:
+  datasource:
+    #Для localhost
+    #password: fadmin
+    #username: fadmin
+    #url: jdbc:postgresql://localhost:5432/db_fmanager
+    #Для reg.ru
+    username: user_admin_ff
+    password: PxXH|rt$kfD:w9?t3A3h4XB8
+    url: jdbc:postgresql://79.174.88.120:15275/db1
+    #Для finfolder
+    #password: fadmin
+    #username: fadmin
+    #url: jdbc:postgresql://localhost:5432/db_fmanager
+  jpa:
+    hibernate:
+      #ddl-auto: create-drop
+      ddl-auto: create
+      #ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+
+  #Конфиг для локального почтового сервера postfix
+  mail:
+    #Параметры сервера
+    #host: localhost
+    #port: 25
+    #username: postfix@finfolder.ru
+    #password: $2y$10$8Ab.dXeOA0CjkUYuQYQBh.6gKA4oMgHjYy/CKEoyGotRdtvbmnk.G
+    #Параметры локалки для mailDev
+    host: localhost
+    port: 1025
+    username: hello
+    password: hello
+
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always #always #neve
+    timeout: 300
+  batch:
+    jdbc:
+      initialize-schema: always
+
+
+finsconfig:
+  #port: localhost:8080
+  #port: 194.67.104.72:8081
+  port: www.finfolder.ru
